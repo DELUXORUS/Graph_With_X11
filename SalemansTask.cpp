@@ -116,3 +116,25 @@ void SalemansTask::_output() {
             cout << " => ";
     }
 }
+
+// void SalemansTask::_outputPaths(const std::vector<int>& path1, const std::vector<int>& path2) {
+//     cout << endl << "Path 1" << endl;
+
+//     for (auto it = path1.begin(); it != path1.end();) {
+//         cout << *it; 
+        
+//         if (++it != path1.end())
+//             cout << " => ";
+//     }
+
+//     cout << endl << "Path 2" << endl;
+
+//     for (auto it = path2.begin(); it != path2.end();) {
+//         cout << *it; 
+        
+//         if (++it != path2.end())
+//             cout << " => ";
+//     }
+
+//     cout << endl;
+// }
