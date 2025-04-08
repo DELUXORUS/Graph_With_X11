@@ -90,27 +90,13 @@ void Graphic::drawEdge(Vertex vertex1, Vertex vertex2) {
     drawVertex(vertex2);
 }
 
-bool Graphic::checkCollisionVertex(Vertex& currentVertex, Graph& graph) {    
-    for (int i = 0; i < graph.getVectorVertex().size(); i++) {
-        int x = graph.getVectorVertex()[i].getX() - currentVertex.getX();
-        int y = graph.getVectorVertex()[i].getY() - currentVertex.getY();
-        
-        if (x * x + y * y <= RADIUS_VERTEX * RADIUS_VERTEX) {
-            currentVertex = graph.getVectorVertex()[i];
-            return true; 
-        }
-    }
-    
-    return false;
-}
-
 bool Graphic::checkCollisionVertex(Vertex& currentVertex, std::vector<Vertex>& numberVertex) {    
-    for(int i = 0; i < numberVertex.size(); i++) {
+    for (int i = 0; i < numberVertex.size(); i++) {
         int x = numberVertex[i].getX() - currentVertex.getX();
         int y = numberVertex[i].getY() - currentVertex.getY();
         
-        if(x * x + y * y <= RADIUS_VERTEX * RADIUS_VERTEX) {
-            currentVertex.setNumber(numberVertex[i].getNumber());
+        if (x * x + y * y <= RADIUS_VERTEX * RADIUS_VERTEX) {
+            currentVertex = numberVertex[i];
             return true; 
         }
     }

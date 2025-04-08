@@ -197,7 +197,7 @@ void dispatch(Graphic& graphic, Graph& graph, WeightGraph& weightGraph) {
                 Vertex currentVertex(0, 0, event.xbutton.x, event.xbutton.y);
                 
                 if (event.xbutton.button == Button1) {       
-                    if (graphic.checkCollisionVertex(currentVertex, graph) == true) {
+                    if (graphic.checkCollisionVertex(currentVertex, graph.getVectorVertex()) == true) {
                         if (selectVertex.size() == 0)
                             selectVertex.push_back(currentVertex);
 
