@@ -20,7 +20,7 @@
 #include "PrueferEncode.h"
 #include "PrueferDecode.h"
 #include "PaintAlgorithm.h"
-#include "SalemansTask.h"
+#include "SalesmansTask.h"
 
 
 static int countVertex = 1;
@@ -159,7 +159,7 @@ int keyAction(XEvent* event, Graphic& graphic, Graph& graph, WeightGraph& weight
         }
 
         case XK_9: {
-            salemansTask = new SalesmansTask(weightGraph);
+            salemansTask = new GreedyAlgorithm(weightGraph);
             salemansTask->search();
             break;
         }

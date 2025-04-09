@@ -10,10 +10,10 @@
 #include "VertexWeight.h"
 
 
-class SalesmansTask : public WeightAlgorithm {
+class GreedyAlgorithm : public WeightAlgorithm {
 public:
-    SalesmansTask() {}
-    SalesmansTask(WeightGraph weightGraph) : WeightAlgorithm(weightGraph) {}
+    GreedyAlgorithm() {}
+    GreedyAlgorithm(WeightGraph weightGraph) : WeightAlgorithm(weightGraph) {}
     void search();
 
 private:
