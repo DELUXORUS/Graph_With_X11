@@ -159,7 +159,7 @@ int keyAction(XEvent* event, Graphic& graphic, Graph& graph, WeightGraph& weight
         }
 
         case XK_9: {
-            salemansTask = new SalemansTask(weightGraph);
+            salemansTask = new SalesmansTask(weightGraph);
             salemansTask->search();
             break;
         }
