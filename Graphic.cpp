@@ -63,6 +63,34 @@ void Graphic::_createWindow() {
     XMapWindow(_display, _window);
 }
 
+void Graphic::drawArrow(Vertex initialVertex, Vertex finalVertex) {
+    // Вычисляем угол линии
+    int x1 = initialVertex.getX();
+    int y1 = initialVertex.getY();
+    int x2 = finalVertex.getX();
+    int y2 = finalVertex.getY();
+
+    double angle = atan2(y2 - y1, x2 - x1);
+    
+    // Положение стрелки
+    int arrow_x = x1 + (x2 - x1) / 2;
+    int arrow_y = y1 + (y2 - y1) / 2;
+
+    // Длина стрелки
+    int arrow_length = 20;
+    int arrow_width = 10;
+
+    // Концы стрелки
+    int x1_arrow = arrow_x - arrow_length * cos(angle - M_PI / 6);
+    int y1_arrow = arrow_y - arrow_length * sin(angle - M_PI / 6);
+    int x2_arrow = arrow_x - arrow_length * cos(angle + M_PI / 6);
+    int y2_arrow = arrow_y - arrow_length * sin(angle + M_PI / 6);
+
+    // Рисуем стрелку
+    XDrawLine(_display, _window, _gc[2], arrow_x, arrow_y, x1_arrow, y1_arrow);
+    XDrawLine(_display, _window, _gc[2], arrow_x, arrow_y, x2_arrow, y2_arrow);
+}
+
 void Graphic::drawWeight(Vertex vertex1, Vertex vertex2, int weight) {
     std::string weightStr = std::to_string(weight);
     int distX = (vertex1.getX() + vertex2.getX()) / 2;
@@ -107,13 +135,13 @@ bool Graphic::checkCollisionVertex(Vertex& currentVertex, std::vector<Vertex>& n
 void Graphic::rendering(std::map<int, std::vector<Vertex>>& listAdjacency, std::vector<Vertex>& numberVertex) {
     XClearWindow(_display, _window);
     std::set<int> renderedVertex;
-    
-    for(auto& vertex : listAdjacency) {
-        Vertex currentVertex = numberVertex[vertex.first - 1];
+
+    for(auto& row : listAdjacency) {
+        Vertex currentVertex = numberVertex[row.first - 1];
         drawVertex(currentVertex);
         renderedVertex.insert(currentVertex.getNumber());
         
-        for(auto& adjacencyVertex : vertex.second) {
+        for(auto& adjacencyVertex : row.second) {
             if(renderedVertex.find(adjacencyVertex.getNumber()) == renderedVertex.end()) {
                 drawVertex(adjacencyVertex);
                 renderedVertex.insert(adjacencyVertex.getNumber());

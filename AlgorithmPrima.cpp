@@ -1,5 +1,14 @@
 #include "AlgorithmPrima.h"
 
+void AlgorithmPrima::initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+                                std::vector<std::vector<int>> matrixAdjacency,
+                                std::vector<Vertex> numberVertex) 
+{
+    copy(listAdjacency.begin(), listAdjacency.end(), 
+         inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+}
 
 void AlgorithmPrima::search() {
     int firstVertex = 1;
@@ -11,12 +20,12 @@ void AlgorithmPrima::search() {
 } 
 
 void AlgorithmPrima::_createTree() {
-    while (_visitVertex.size() < _weightGraph.getWeightListAdjacency().size()) {
+    while (_visitVertex.size() < _listAdjacencyForCurrentGraph.size()) {
         Vertex minEdge = {0, std::numeric_limits<int>::max(), 0, 0};
         int selectVisitVertex = -1;
         
         for (int vertex : _visitVertex) {
-            for (auto& adjacencyVertex : _weightGraph.getWeightListAdjacency()[vertex]) {
+            for (auto& adjacencyVertex : _listAdjacencyForCurrentGraph[vertex]) {
                 if (_visitVertex.find(adjacencyVertex.getNumber()) == _visitVertex.end() && adjacencyVertex.getWeight() < minEdge.getWeight()) {
                     minEdge = adjacencyVertex;
                     selectVisitVertex = vertex;
@@ -27,7 +36,7 @@ void AlgorithmPrima::_createTree() {
         if (selectVisitVertex != -1) {
             _treeListAdjacency[selectVisitVertex].push_back(minEdge);
 
-            for(auto& vertex : _weightGraph.getWeightListAdjacency()[minEdge.getNumber()])
+            for(auto& vertex : _listAdjacencyForCurrentGraph[minEdge.getNumber()])
                 if(vertex.getNumber() == selectVisitVertex)
                     _treeListAdjacency[minEdge.getNumber()].push_back(vertex);
 

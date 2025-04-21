@@ -12,9 +12,12 @@
 class PrueferEncode : public Algorithm {
     public:
         PrueferEncode() {}
-        PrueferEncode(Graph graph): Algorithm(graph) {
-            _deformableListAdjacency = _graph.getListAdjacency(); 
-        }
+        // PrueferEncode(Graph graph): Algorithm(graph) {
+        //     _deformableListAdjacency = _graph.getListAdjacency(); 
+        // }
+        void initialize(std::map<int, std::vector<int>> listAdjacency,
+                        std::vector<std::vector<int>> matrixAdjacency,
+                        std::vector<Vertex> numberVertex);
         void search();
         std::vector<int>& getCodePruefer() { return _codePruefer; }
     private:

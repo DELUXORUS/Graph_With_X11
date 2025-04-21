@@ -24,6 +24,7 @@ class WeightGraph {
         bool checkEdge(int numberVertex1, int numberVertex2);
         void reset();
     private:
+        void _addInOrderInList(int firstVertex, int secondVertex);
         std::vector<Vertex> _numberVertex;
         std::map<int, std::vector<Vertex>> _weightListAdjacency;
         std::vector<std::vector<int>> _weightMatrixAdjacency;

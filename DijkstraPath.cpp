@@ -1,11 +1,25 @@
 #include "DijkstraPath.h"
 
 
+void DijkstraPath::initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+							  std::vector<std::vector<int>> matrixAdjacency,
+							  std::vector<Vertex> numberVertex) 
+{
+	copy(listAdjacency.begin(), listAdjacency.end(), 
+		 inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+
+	_minDist.resize(_matrixAdjacencyForCurrentGraph.size(), std::numeric_limits<int>::max());
+	// _minDist[0] = 0;
+}
+
 void DijkstraPath::search() {
 	int initVertex, finalVertex;
 	cout << endl << "Dijkstra Path" << endl;
- 	cout << "Enter initial and final vertex:" << endl;
-  	cin >> initVertex >> finalVertex;
+	cout << "Enter initial and final vertex:" << endl;
+	cin >> initVertex >> finalVertex;
+    _minDist[initVertex - 1] = 0;
 	_searchMinDist(initVertex);
 	_path.push_back(finalVertex);
 	_searchPath(finalVertex);
@@ -15,7 +29,7 @@ void DijkstraPath::search() {
 void DijkstraPath::_searchMinDist(int currentVertex) {
 	_visitVertex.push_back(currentVertex - 1);
 
-	for(auto& adjacencyVertex : _weightGraph.getWeightListAdjacency()[currentVertex]) {
+	for(auto& adjacencyVertex : _listAdjacencyForCurrentGraph[currentVertex]) {
 		int numberAdjacencyVertex = adjacencyVertex.getNumber();
 		int weightAdjacencyVertex = adjacencyVertex.getWeight();
 		int point = weightAdjacencyVertex + _minDist[currentVertex - 1];
@@ -42,7 +56,7 @@ void DijkstraPath::_searchPath(int finalVertex) {
 	int weightAdjacency, weightCurrentVertex;
 	int numberAdjacency;
 
-	for(auto& adjacencyVertex : _weightGraph.getWeightListAdjacency()[finalVertex]) {
+	for(auto& adjacencyVertex : _listAdjacencyForCurrentGraph[finalVertex]) {
 		weightCurrentVertex = adjacencyVertex.getWeight();
 		numberAdjacency = adjacencyVertex.getNumber();
 		weightAdjacency = _minDist[finalVertex - 1] - weightCurrentVertex;

@@ -10,7 +10,10 @@
 class PaintAlgorithm : public Algorithm {
     public:
         PaintAlgorithm() {}
-        PaintAlgorithm(Graph graph) : Algorithm(graph) {}
+        // PaintAlgorithm(Graph graph) : Algorithm(graph) {}
+        void initialize(std::map<int, std::vector<int>> listAdjacency,
+                        std::vector<std::vector<int>> matrixAdjacency,
+                        std::vector<Vertex> numberVertex);
         void search();
     private:
         void _sortVertex();

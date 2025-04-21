@@ -7,7 +7,10 @@
 class SimpleChain : public Algorithm {
     public:
         SimpleChain() {};
-        SimpleChain(Graph graph): Algorithm(graph) {}
+        // SimpleChain(Graph graph): Algorithm(graph) {}
+        void initialize(std::map<int, std::vector<int>> listAdjacency,
+                        std::vector<std::vector<int>> matrixAdjacency,
+                        std::vector<Vertex> numberVertex);
         void search();
     private:
         void _search(int currentVertex, int finalVertex);

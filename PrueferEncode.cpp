@@ -1,6 +1,17 @@
 #include "PrueferEncode.h"
 
 
+void PrueferEncode::initialize(std::map<int, std::vector<int>> listAdjacency,
+                                std::vector<std::vector<int>> matrixAdjacency,
+                                std::vector<Vertex> numberVertex)
+{
+    copy(listAdjacency.begin(), listAdjacency.end(), 
+        inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+    _deformableListAdjacency = _listAdjacencyForCurrentGraph;
+}
+
 void PrueferEncode::search() {
     if(_encode() == true) {
         cout << endl << "Code Pruefer: ";
@@ -12,11 +23,11 @@ void PrueferEncode::search() {
 }
 
 bool PrueferEncode::_encode() {
-    while(_codePruefer.size() != (_graph.getNumberVertex() - 2)) {
+    while(_codePruefer.size() != (_numberVertexForCurrentGraph.size() - 2)) {
         int minNumberVertex = std::numeric_limits<int>::max() ;
         int countDegreeVertex = 0;
 
-        for(int j = 1; j < _graph.getListAdjacency().size(); j++) {
+        for(int j = 1; j < _listAdjacencyForCurrentGraph.size(); j++) {
             if(_deformableListAdjacency[j].size() == 1) {
                 if(j < minNumberVertex) {
                     minNumberVertex = j;

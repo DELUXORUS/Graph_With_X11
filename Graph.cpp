@@ -22,7 +22,14 @@ bool Graph::checkEdge(int numberVertex1, int numberVertex2) {
 }
 
 void Graph::fillMatrixAdjacency(int vertex1, int vertex2) {
-    _matrixAdjacency.resize(_numberVertex.size(), std::vector<int>(_numberVertex.size()));
+    // _matrixAdjacency.resize(_numberVertex.size(), std::vector<int>(_numberVertex.size()));
+    _matrixAdjacency.resize(_numberVertex.size());
+
+    for (size_t i = 0; i < _matrixAdjacency.size(); ++i) {
+        _matrixAdjacency[i].resize(_numberVertex.size(), 0);
+    }
+
+
     _matrixAdjacency[vertex1 - 1][vertex2 - 1] = 1;
     _matrixAdjacency[vertex2 - 1][vertex1 - 1] = 1;
 }

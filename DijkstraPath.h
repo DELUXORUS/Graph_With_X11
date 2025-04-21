@@ -10,10 +10,13 @@
 class DijkstraPath : public WeightAlgorithm {
 	public:
 		DijkstraPath() {}
-		DijkstraPath(WeightGraph weightGraph): WeightAlgorithm(weightGraph) {
-			_minDist.resize(_weightGraph.getWeightMatrixAdjacency().size(), std::numeric_limits<int>::max());
-			_minDist[0] = 0;
-		}
+		void initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+						std::vector<std::vector<int>> matrixAdjacency,
+						std::vector<Vertex> numberVertex);
+		// DijkstraPath(WeightGraph weightGraph): WeightAlgorithm(weightGraph) {
+			// _minDist.resize(_matrixAdjacencyForCurrentGraph.size(), std::numeric_limits<int>::max());
+			// _minDist[0] = 0;
+		// }
 		void search();
     private:
 		void _searchMinDist(int currentVertex);

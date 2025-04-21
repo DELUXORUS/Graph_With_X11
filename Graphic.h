@@ -22,6 +22,7 @@ class Graphic {
         void initializeGraphic();
         Graphic() {}
         ~Graphic() { _destroyGraphic(); }
+        void drawArrow(Vertex initialVertex, Vertex finalVertex);
         void drawVertex(Vertex currentVertex);
         void drawEdge(Vertex vertex1, Vertex vertex2);
         void drawWeight(Vertex vertex1, Vertex vertex2, int weight);

@@ -12,8 +12,11 @@
 
 class GreedyAlgorithm : public WeightAlgorithm {
 public:
+    void initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+                    std::vector<std::vector<int>> matrixAdjacency,
+                    std::vector<Vertex> numberVertex); 
     GreedyAlgorithm() {}
-    GreedyAlgorithm(WeightGraph weightGraph) : WeightAlgorithm(weightGraph) {}
+    // GreedyAlgorithm(WeightGraph weightGraph) : WeightAlgorithm(weightGraph) {}
     void search();
 
 private:

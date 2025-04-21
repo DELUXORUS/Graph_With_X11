@@ -1,6 +1,16 @@
 #include "PaintAlgorithm.h"
 
 
+void PaintAlgorithm::initialize(std::map<int, std::vector<int>> listAdjacency,
+                                std::vector<std::vector<int>> matrixAdjacency,
+                                std::vector<Vertex> numberVertex)
+{
+copy(listAdjacency.begin(), listAdjacency.end(), 
+inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+_matrixAdjacencyForCurrentGraph = matrixAdjacency;
+_numberVertexForCurrentGraph = numberVertex;
+}
+
 void PaintAlgorithm::search() {
     _sortVertex();
     _colorDistribution();
@@ -10,7 +20,7 @@ void PaintAlgorithm::search() {
 void PaintAlgorithm::_sortVertex() {
     int maxSize = 0;
 
-    for(auto rowList : _graph.getListAdjacency()) {
+    for(auto rowList : _listAdjacencyForCurrentGraph) {
         if(rowList.second.size() >= maxSize) {
             _vertexSortedDegree.insert(_vertexSortedDegree.begin(), rowList.first);
             maxSize = rowList.second.size();
@@ -34,11 +44,11 @@ void PaintAlgorithm::_colorDistribution() {
             bool canAdd = true;
 
             for (int vertexForCheck : _manyColors[j]) {
-                auto it = std::find(_graph.getListAdjacency()[vertexForCheck].begin(),
-                                     _graph.getListAdjacency()[vertexForCheck].end(),
+                auto it = std::find(_listAdjacencyForCurrentGraph[vertexForCheck].begin(),
+                                    _listAdjacencyForCurrentGraph[vertexForCheck].end(),
                                      currentVertex);
 
-                if (it != _graph.getListAdjacency()[vertexForCheck].end()) {
+                if (it != _listAdjacencyForCurrentGraph[vertexForCheck].end()) {
                     canAdd = false;
                     break;
                 }
@@ -59,15 +69,15 @@ void PaintAlgorithm::_colorDistribution() {
 }
 
 void PaintAlgorithm::_output() {
-    std::cout << std::endl << "Many Colors" << std::endl;
+    cout << endl << "Many Colors" << endl;
 
     for (const auto& row : _manyColors) {
-        std::cout << "Color " << row.first << ":";
+        cout << "Color " << row.first << ":";
 
         for (int vertex : row.second) {
-            std::cout << "   " << vertex;
+            cout << "   " << vertex;
         }
 
-        std::cout << std::endl;
+        cout << endl;
     }
 }

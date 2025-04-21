@@ -1,11 +1,22 @@
 #include "SalesmansTask.h"
 
 
+void GreedyAlgorithm::initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+                               std::vector<std::vector<int>> matrixAdjacency,
+                               std::vector<Vertex> numberVertex) 
+{
+    copy(listAdjacency.begin(), listAdjacency.end(), 
+         inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+
+}
+
 void GreedyAlgorithm::search() {
     std::vector<int> path1;
     std::vector<int> path2;
 
-    for (int i = 0; i < _weightGraph.getNumberVertex(); ++i) {
+    for (int i = 0; i < _numberVertexForCurrentGraph.size(); ++i) {
         int numberVertex = i + 1;
         Vertex minSizeEdge = {0, std::numeric_limits<int>::max(), 0, 0};
         Vertex prevMinSizeEdge = {0, std::numeric_limits<int>::max(), 0, 0};
@@ -13,7 +24,7 @@ void GreedyAlgorithm::search() {
         path1 = {numberVertex};
         path2 = {numberVertex};
         
-        for (auto& vertex : _weightGraph.getWeightListAdjacency()[numberVertex]) {
+        for (auto& vertex : _listAdjacencyForCurrentGraph[numberVertex]) {
             if (vertex.getWeight() < minSizeEdge.getWeight()) {
                 prevMinSizeEdge = minSizeEdge;
                 minSizeEdge = vertex;
@@ -50,12 +61,12 @@ void GreedyAlgorithm::search() {
 bool GreedyAlgorithm::_recursiveSearch(std::vector<int>& path1, std::vector<int>& path2) {
 
     int currentVertex1 = path1.back() - 1;
-    auto minEdge1 = _searchMinimalEdgeForVertex(_weightGraph.getWeightMatrixAdjacency()[currentVertex1], 
+    auto minEdge1 = _searchMinimalEdgeForVertex(_matrixAdjacencyForCurrentGraph[currentVertex1], 
                                                 path1, 
                                                 path2);
     
     int currentVertex2 = path2.back() - 1;
-    auto minEdge2 = _searchMinimalEdgeForVertex(_weightGraph.getWeightMatrixAdjacency()[currentVertex2],
+    auto minEdge2 = _searchMinimalEdgeForVertex(_matrixAdjacencyForCurrentGraph[currentVertex2],
                                                 path1, 
                                                 path2);
 
@@ -73,7 +84,7 @@ bool GreedyAlgorithm::_recursiveSearch(std::vector<int>& path1, std::vector<int>
 }
 
 bool GreedyAlgorithm::_checkAdjacency(int vertex1, int vertex2) {
-    return (_weightGraph.getWeightMatrixAdjacency()[vertex1][vertex2]);
+    return (_matrixAdjacencyForCurrentGraph[vertex1][vertex2]);
 }
 
 std::pair<int, int> GreedyAlgorithm::_searchMinimalEdgeForVertex(const std::vector<int>& adjacencyVertex,
@@ -115,6 +126,8 @@ void GreedyAlgorithm::_output() {
         if (++it != _hamiltonianCycle.end())
             cout << " => ";
     }
+
+    cout << endl;
 }
 
 // void GreedyAlgorithm::_outputPaths(const std::vector<int>& path1, const std::vector<int>& path2) {

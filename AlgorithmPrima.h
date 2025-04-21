@@ -13,10 +13,13 @@
 
 class AlgorithmPrima : public WeightAlgorithm {
     public:
-        AlgorithmPrima(WeightGraph weightGraph): WeightAlgorithm(weightGraph) {}
+        void initialize(std::map<int, std::vector<Vertex>> listAdjacency,
+                        std::vector<std::vector<int>> matrixAdjacency,
+                        std::vector<Vertex> numberVertex);
+        // AlgorithmPrima(WeightGraph weightGraph): WeightAlgorithm(weightGraph) {}
 
         std::map<int, std::vector<Vertex>>& getTreeListAdjacency() { return _treeListAdjacency; }
-        WeightGraph getWeightGraph() { return _weightGraph; }
+        // WeightGraph getWeightGraph() { return _weightGraph; }
         void search();
     private:
         void _output();

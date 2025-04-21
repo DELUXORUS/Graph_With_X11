@@ -1,6 +1,16 @@
 #include "EulerianCycle.h"
 
 
+void EulerianCycle::initialize(std::map<int, std::vector<int>> listAdjacency,
+                                std::vector<std::vector<int>> matrixAdjacency,
+                                std::vector<Vertex> numberVertex)
+{
+    copy(listAdjacency.begin(), listAdjacency.end(), 
+        inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+}
+
 void EulerianCycle::search() {
     int firstVertexPathEulerian = _check();
 
@@ -21,7 +31,7 @@ void EulerianCycle::search() {
         
         default: {
             cout << endl << "Eulerian path" << endl;
-            std::vector<std::vector<int>> copyMatrixAdjacency = _graph.getMatrixAdjacency();
+            std::vector<std::vector<int>> copyMatrixAdjacency = _matrixAdjacencyForCurrentGraph;
             _search(firstVertexPathEulerian);
             _output();
             break;
@@ -30,7 +40,7 @@ void EulerianCycle::search() {
 }
 
 void EulerianCycle::_search(int currentVertex) {
-    std::vector<std::vector <int>> copyMatrixAdjacency = _graph.getMatrixAdjacency();
+    std::vector<std::vector <int>> copyMatrixAdjacency = _matrixAdjacencyForCurrentGraph;
     std::stack<int> vertexPath;
 
 vertexPath.push(currentVertex);
@@ -39,11 +49,11 @@ while(vertexPath.empty() != 1) {
     int currentVertex = vertexPath.top() - 1;
     int i;
 
-    for (i = 0; i < _graph.getNumberVertex(); ++i)
+    for (i = 0; i < _numberVertexForCurrentGraph.size(); ++i)
         if(copyMatrixAdjacency[currentVertex][i] != 0)
             break;
     
-    if(i == _graph.getNumberVertex()) {
+    if(i == _numberVertexForCurrentGraph.size()) {
         _eulerianCycleOrPath.push_back(currentVertex + 1);
         vertexPath.pop();
     }
@@ -70,8 +80,8 @@ void EulerianCycle::_output() {
 int EulerianCycle::_check() {
     std::vector<int> oddVertex;
 
-    for(int i = 1; i <= _graph.getListAdjacency().size(); i++) {
-        if((_graph.getListAdjacency()[i].size() % 2) != 0) {
+    for(int i = 1; i <= _listAdjacencyForCurrentGraph.size(); i++) {
+        if((_listAdjacencyForCurrentGraph[i].size() % 2) != 0) {
             oddVertex.push_back(i);
         }
     }

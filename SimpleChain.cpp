@@ -1,6 +1,16 @@
 #include "SimpleChain.h"
 
 
+void SimpleChain::initialize(std::map<int, std::vector<int>> listAdjacency,
+                            std::vector<std::vector<int>> matrixAdjacency,
+                            std::vector<Vertex> numberVertex)
+{
+    copy(listAdjacency.begin(), listAdjacency.end(), 
+        inserter(_listAdjacencyForCurrentGraph, _listAdjacencyForCurrentGraph.end()));
+    _matrixAdjacencyForCurrentGraph = matrixAdjacency;
+    _numberVertexForCurrentGraph = numberVertex;
+}
+
 void SimpleChain::search() {
     int initVertex, finalVertex;
     cout << endl << "Simple Chains" << endl;
@@ -10,8 +20,8 @@ void SimpleChain::search() {
 
     simpleChain.push_back(initVertex);
 
-    for(int j = 0; j < _graph.getListAdjacency()[initVertex].size(); j++)
-        _search(_graph.getListAdjacency()[initVertex][j], finalVertex);
+    for(int j = 0; j < _listAdjacencyForCurrentGraph[initVertex].size(); j++)
+        _search(_listAdjacencyForCurrentGraph[initVertex][j], finalVertex);
 }
 
 void SimpleChain::_search(int currentVertex, int finalVertex) {    
@@ -27,8 +37,8 @@ void SimpleChain::_search(int currentVertex, int finalVertex) {
     
     simpleChain.push_back(currentVertex);
 
-    for(int j = 0; j < _graph.getListAdjacency()[currentVertex].size(); j++)
-        _search(_graph.getListAdjacency()[currentVertex][j], finalVertex);
+    for(int j = 0; j < _listAdjacencyForCurrentGraph[currentVertex].size(); j++)
+        _search(_listAdjacencyForCurrentGraph[currentVertex][j], finalVertex);
     
     simpleChain.pop_back();
     return;
